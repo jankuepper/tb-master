@@ -2,13 +2,26 @@ version: '3.7'
 services:
   discoveryservice:
     build:
-     context: ../discoveryservice
-     dockerfile: Dockerfile
+      context: ../discoveryservice
+      dockerfile: Dockerfile
     image: 'discoveryservice:latest'
     networks:
       - front
     ports:
       - 8761:8761
+  gatewayservice:
+    build:
+      context: ../gatewayservice
+      dockerfile: Dockerfile
+    image: 'gatewayservice:latest'
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"profiles": {"active": "docker"}}}'
+    networks:
+      - front
+    ports:
+      - 8080:8080
+    depends_on:
+      - discoveryservice
 networks:
   front:
     driver: bridge
