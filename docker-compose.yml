@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  discoveryservice:
+    build:
+     context: ../discoveryservice
+     dockerfile: Dockerfile
+    image: 'discoveryservice:latest'
+    networks:
+      - front
+    ports:
+      - 8761:8761
+networks:
+  front:
+    driver: bridge
